@@ -19,8 +19,6 @@ dependencies:
   react-select-event: 5.3.0
   react-slick: 0.28.1_react-dom@17.0.1+react@17.0.1
   slick-carousel: 1.8.1
-  uuid: 8.3.2
-  uuidv4: 6.2.12
 devDependencies:
   eslint: 7.32.0
   eslint-config-airbnb: 18.2.1_89a7660e27a60756d37ea3ce4774e8e0
@@ -2467,10 +2465,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-O3MmRAk6ZuAKa9CHgg0Pr0+lUOqoMLpc9AS4R8ano2auvsg7IE8syF3Xh/NPr26TWklxYcqoEEFdzLLs1fV9PQ==
-  /@types/uuid/8.3.1:
-    dev: false
-    resolution:
-      integrity: sha512-Y2mHTRAbqfFkpjldbkHGY8JIzRN6XqYRliG8/24FcHm2D2PwW24fl5xMRTVGdrb7iMrwCaIEbLWerGIkXuFWVg==
   /@types/webpack-sources/3.2.0:
     dependencies:
       '@types/node': 16.9.4
@@ -13061,16 +13055,11 @@ packages:
     resolution:
       integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
   /uuid/8.3.2:
+    dev: true
     hasBin: true
+    optional: true
     resolution:
       integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
-  /uuidv4/6.2.12:
-    dependencies:
-      '@types/uuid': 8.3.1
-      uuid: 8.3.2
-    dev: false
-    resolution:
-      integrity: sha512-UnN4ThIYWhv3ZUE8UwDnnCvh4JafCNu+sQkxmLyjCVwK3rjLfkg3DYiEv6oCMDIAIVEDP4INg4kX/C5hKaRzZA==
   /v8-compile-cache/2.3.0:
     dev: true
     resolution:
@@ -13756,5 +13745,3 @@ specifiers:
   react-select-event: 5.3.0
   react-slick: 0.28.1
   slick-carousel: 1.8.1
-  uuid: 8.3.2
-  uuidv4: 6.2.12
