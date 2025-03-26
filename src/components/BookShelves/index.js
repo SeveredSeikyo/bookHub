@@ -71,13 +71,15 @@ const BookShelves = props => {
         <div className="bookshelf-category-div">
           <h1>Bookshelves</h1>
           {bookshelvesList.map(category => (
-            <p
+            <button
+              style={{border: 'none', outline: 'none', background: 'none'}}
+              type="button"
               key={category.id}
               className={bookshelfName === category.value ? 'selected' : ''}
               onClick={() => setBookShelfName(category.value)}
             >
               {category.label}
-            </p>
+            </button>
           ))}
         </div>
 
@@ -119,11 +121,15 @@ const BookShelves = props => {
           ) : (
             <div className="book-shelves-result-div">
               {bookShelfData.length > 0 ? (
-                bookShelfData.map(book => (
-                  <Link to={`/books/${book.id}`} key={book.id}>
-                    <BookShelfItem key={book.id} bookDetails={book} />
-                  </Link>
-                ))
+                <ul>
+                  {bookShelfData.map(book => (
+                    <li key={book.id}>
+                      <Link to={`/books/${book.id}`} key={book.id}>
+                        <BookShelfItem key={book.id} bookDetails={book} />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               ) : (
                 <div className="book-shelves-error-result">
                   <img
@@ -193,11 +199,15 @@ const BookShelves = props => {
         ) : (
           <div className="book-shelves-result-div">
             {bookShelfData.length > 0 ? (
-              bookShelfData.map(book => (
-                <Link to={`/books/${book.id}`} key={book.id}>
-                  <BookShelfItem key={book.id} bookDetails={book} />
-                </Link>
-              ))
+              <ul>
+                {bookShelfData.map(book => (
+                  <li key={book.id}>
+                    <Link to={`/books/${book.id}`} key={book.id}>
+                      <BookShelfItem key={book.id} bookDetails={book} />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             ) : (
               <div className="book-shelves-error-result">
                 <img

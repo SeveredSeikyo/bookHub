@@ -120,6 +120,10 @@ a {
   color: #334155;
 }
 
+ul {
+  list-style-type: none;
+}
+
 .bookshelf-mobile-category-div button {
   color: #0284c7;
   border: 1px solid #0284c7;
