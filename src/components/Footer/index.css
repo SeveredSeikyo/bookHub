@@ -4,7 +4,7 @@
   align-items: center;
   flex-direction: column;
   text-align: center;
-  background: none;
+  width: 100%;
   background-color: #f5f7fa;
   padding: 20px;
 }

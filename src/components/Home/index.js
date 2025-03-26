@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react'
+import {Link} from 'react-router-dom'
 import Slider from 'react-slick'
 import Cookies from 'js-cookie'
 import Header from '../Header'
@@ -46,13 +47,13 @@ const Home = props => {
   const settings = {
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: 5,
     slidesToScroll: 1,
     responsive: [
       {
         breakpoint: 1450,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 4,
         },
       },
       {
@@ -94,12 +95,16 @@ const Home = props => {
           </div>
           <Slider {...settings}>
             {toppicksData.map(book => (
-              <BookItemHome id={book.id} bookDetails={book} />
+              <Link to={`/books/${book.id}`} key={book.id}>
+                <BookItemHome id={book.id} bookDetails={book} />
+              </Link>
             ))}
           </Slider>
         </div>
       </main>
-      <Footer />
+      <div style={{bottom: 0, left: 0, right: 0}}>
+        <Footer />
+      </div>
     </div>
   )
 }

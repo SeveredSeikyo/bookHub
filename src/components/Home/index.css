@@ -87,6 +87,10 @@
   border-radius: 7px;
 }
 
+a {
+  text-decoration: none;
+}
+
 .slick-prev:before,
 .slick-next:before {
   color: gray;

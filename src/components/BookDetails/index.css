@@ -1,0 +1,19 @@
+.book-details-container {
+  height: 100vh;
+  background-color: #f5f7fa;
+  display: flex;
+  flex-direction: column;
+}
+
+.book-details-div {
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  border-radius: 16px;
+}
+
+.book-details-main {
+  padding: 30px 80px;
+}

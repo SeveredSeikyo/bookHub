@@ -1,0 +1,44 @@
+.book-shelf-item-div {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 20px;
+  padding: 10px 10px;
+  height: 180px;
+  width: 350px;
+}
+
+.book-shelf-item-summary {
+  display: flex;
+  flex-direction: column;
+}
+
+.book-shelf-item-summary h1 {
+  font-size: 16px;
+  color: #334155;
+  margin: 0;
+}
+
+.book-shelf-item-summary p {
+  font-size: 14px;
+  color: #475569;
+  margin: 0;
+}
+
+.rating-div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.book-shelf-item-img-div {
+  height: 100%;
+  width: auto;
+}
+
+.book-shelf-item-img-div img {
+  border-radius: 8px;
+  height: 160px;
+  width: 140px;
+  object-fit: cover;
+}

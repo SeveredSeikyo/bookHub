@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react'
+import {Link} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
 import {BsSearch} from 'react-icons/bs'
@@ -7,8 +8,9 @@ import BookShelfItem from '../BookShelfItem'
 import Footer from '../Footer'
 import './index.css'
 
-const BookShelves = () => {
-  const [bookshelfName, setBookShelfName] = useState('All')
+const BookShelves = props => {
+  const {bookshelvesList} = props
+  const [bookshelfName, setBookShelfName] = useState('ALL')
   const [searchText, setSearchText] = useState('')
   const [bookShelfData, setBookShelfData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -30,7 +32,7 @@ const BookShelves = () => {
       if (response.ok) {
         const data = await response.json()
         const {books} = data
-
+        console.log(data)
         const formattedBooks = books.map(book => ({
           authorName: book.author_name,
           coverPic: book.cover_pic,
@@ -57,57 +59,67 @@ const BookShelves = () => {
   return (
     <div className="bookshelf-container">
       <Header />
-      <div>
+      <div className="bookshelf-div">
         {/* Bookshelves Categories */}
         <div className="bookshelf-category-div">
           <h1>Bookshelves</h1>
-          {['All', 'Read', 'Currently Reading', 'Want to Read'].map(
-            category => (
-              <p
-                key={category}
-                className={bookshelfName === category ? 'selected' : ''}
-                onClick={() => setBookShelfName(category)}
-              >
-                {category}
-              </p>
-            ),
-          )}
+          {bookshelvesList.map(category => (
+            <p
+              key={category.id}
+              className={bookshelfName === category.value ? 'selected' : ''}
+              onClick={() => setBookShelfName(category.value)}
+            >
+              {category.label}
+            </p>
+          ))}
         </div>
 
         {/* Search Bar */}
-        <div>
-          <h1>All Books</h1>
-          <div>
-            <input
-              type="search"
-              placeholder="Search"
-              value={searchText}
-              onChange={e => setSearchText(e.target.value)}
-            />
-            <button type="button" onClick={fetchBooks}>
-              <BsSearch />
-            </button>
+        <div className="bookshelf-result-div">
+          <div className="bookshelf-search-div">
+            <h1>All Books</h1>
+            <div className="bookshelf-search-input">
+              <input
+                type="search"
+                placeholder="Search"
+                value={searchText}
+                onChange={e => setSearchText(e.target.value)}
+              />
+              <button type="button" onClick={fetchBooks}>
+                <BsSearch />
+              </button>
+            </div>
           </div>
+
+          {/* Books List or Loader */}
+          {isLoading ? (
+            <div
+              className="loader-container book-shelf-loader"
+              data-testid="loader"
+            >
+              <Loader type="TailSpin" color="#0284C7" height={50} width={50} />
+            </div>
+          ) : (
+            <div className="book-shelves-result-div">
+              {bookShelfData.length > 0 ? (
+                bookShelfData.map(book => (
+                  <Link to={`/books/${book.id}`} key={book.id}>
+                    <BookShelfItem key={book.id} bookDetails={book} />
+                  </Link>
+                ))
+              ) : (
+                <div className="book-shelves-error-result">
+                  <img
+                    src="https://i.postimg.cc/X7WyLRMc/Group.png"
+                    alt="no books"
+                  />
+                  <p>Your search for {searchText} did not find any matches.</p>
+                </div>
+              )}
+            </div>
+          )}
+          {bookShelfData.length > 0 ? <Footer /> : null}
         </div>
-
-        {/* Books List or Loader */}
-        {isLoading ? (
-          <div className="loader-container" data-testid="loader">
-            <Loader type="TailSpin" color="#0284C7" height={50} width={50} />
-          </div>
-        ) : (
-          <div>
-            {bookShelfData.length > 0 ? (
-              bookShelfData.map(book => (
-                <BookShelfItem key={book.id} bookDetails={book} />
-              ))
-            ) : (
-              <p>No books found.</p>
-            )}
-          </div>
-        )}
-
-        <Footer />
       </div>
     </div>
   )

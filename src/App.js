@@ -2,6 +2,7 @@ import {Route, Switch, Redirect} from 'react-router-dom'
 import Login from './components/Login'
 import Home from './components/Home'
 import BookShelves from './components/BookShelves'
+import BookDetails from './components/BookDetails'
 import ProtectedRoute from './components/ProtectedRoute'
 import './App.css'
 
@@ -39,10 +40,9 @@ const App = () => (
     <ProtectedRoute
       exact
       path="/shelf"
-      render={props => (
-        <BookShelves {...props} bookshelvesList={bookshelvesList} />
-      )}
+      render={() => <BookShelves bookshelvesList={bookshelvesList} />}
     />
+    <ProtectedRoute exact path="/books/:id" component={BookDetails} />
     <Redirect to="not-found" />
   </Switch>
 )
