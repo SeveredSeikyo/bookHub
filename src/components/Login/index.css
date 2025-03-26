@@ -7,8 +7,12 @@
 }
 
 .login-img-desktop img {
-  width: 50vw;
+  width: 100%;
   height: 100vh;
+}
+
+.login-img-desktop {
+  flex-shrink: 1;
 }
 
 .login-form {
@@ -41,6 +45,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-grow: 1;
 }
 
 .login-form-input-div {
@@ -85,8 +90,13 @@
     width: 100%;
   }
 
+  .login-img-desktop {
+    flex-shrink: 0;
+  }
+
   .login-form-div {
     height: 40vh;
     width: 90vw;
+    flex-grow: 0;
   }
 }
