@@ -116,3 +116,26 @@ a {
     display: flex;
   }
 }
+
+.error-view {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-view p {
+  font-size: 24px;
+  font-weight: 500;
+  color: #475569;
+}
+
+.error-view button {
+  height: 40px;
+  padding: 10px 20px;
+  background-color: #0284c7;
+  border: none;
+  outline: none;
+  color: white;
+  border-radius: 10px;
+}

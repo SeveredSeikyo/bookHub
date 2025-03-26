@@ -91,3 +91,49 @@
 a {
   text-decoration: none;
 }
+
+.bookshelf-mobile-view-div {
+  display: none;
+}
+
+.bookshelf-mobile-search {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 0px 0px 20px;
+}
+
+.bookshelf-mobile-category-div {
+  display: flex;
+  padding: 10px 30px;
+  flex-direction: column;
+}
+
+.bookshelf-mobile-category-list-div {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.bookshelf-mobile-category-div h1 {
+  font-size: 16px;
+  color: #334155;
+}
+
+.bookshelf-mobile-category-div button {
+  color: #0284c7;
+  border: 1px solid #0284c7;
+  background-color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 25px;
+}
+
+@media (max-width: 850px) {
+  .bookshelf-div {
+    display: none;
+  }
+  .bookshelf-mobile-view-div {
+    display: flex;
+    flex-direction: column;
+  }
+}

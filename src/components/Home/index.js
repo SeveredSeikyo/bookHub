@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
+import Loader from 'react-loader-spinner'
 import Slider from 'react-slick'
 import Cookies from 'js-cookie'
 import Header from '../Header'
@@ -9,40 +10,50 @@ import './index.css'
 
 const Home = props => {
   const {history} = props
+  const [isLoading, setIsLoading] = useState(true)
+  const [isError, setIsError] = useState(false)
   const [toppicksData, setToppicksData] = useState([])
-  useEffect(() => {
-    const fetchTopPicks = async () => {
-      const url = 'https://apis.ccbp.in/book-hub/top-rated-books'
-      const jwtToken = Cookies.get('jwt_token')
-      const options = {
-        headers: {
-          Authorization: `Bearer ${jwtToken}`,
-        },
-        method: 'GET',
-      }
-
-      try {
-        const response = await fetch(url, options)
-        if (response.ok) {
-          const data = await response.json()
-          const {books} = data
-
-          const formattedBooks = books.map(book => ({
-            authorName: book.author_name,
-            coverPic: book.cover_pic,
-            id: book.id,
-            title: book.title,
-          }))
-
-          setToppicksData(formattedBooks)
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error)
-      }
+  const fetchTopPicks = async () => {
+    setIsLoading(true)
+    setIsError(false)
+    const url = 'https://apis.ccbp.in/book-hub/top-rated-books'
+    const jwtToken = Cookies.get('jwt_token')
+    const options = {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+      method: 'GET',
     }
 
+    try {
+      const response = await fetch(url, options)
+      if (response.ok) {
+        const data = await response.json()
+        const {books} = data
+
+        const formattedBooks = books.map(book => ({
+          authorName: book.author_name,
+          coverPic: book.cover_pic,
+          id: book.id,
+          title: book.title,
+        }))
+
+        setToppicksData(formattedBooks)
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error)
+      setIsError(true)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+  useEffect(() => {
     fetchTopPicks()
   }, [])
+
+  const onClickTryAgain = () => {
+    fetchTopPicks()
+  }
 
   const settings = {
     infinite: true,
@@ -93,13 +104,31 @@ const Home = props => {
               Find Books
             </button>
           </div>
-          <Slider {...settings}>
-            {toppicksData.map(book => (
-              <Link to={`/books/${book.id}`} key={book.id}>
-                <BookItemHome id={book.id} bookDetails={book} />
-              </Link>
-            ))}
-          </Slider>
+          {isLoading ? (
+            <div className="loader-container" testid="loader">
+              <Loader type="TailSpin" color="#0284C7" height={50} width={50} />
+            </div>
+          ) : null}
+          {isError ? (
+            <div className="error-view">
+              <img
+                src="https://i.postimg.cc/WpnGGXdy/Group-7522.png"
+                alt="failure view"
+              />
+              <p>Something went wrong, Please try again.</p>
+              <button type="button" onClick={onClickTryAgain}>
+                Please Try Again
+              </button>
+            </div>
+          ) : (
+            <Slider {...settings}>
+              {toppicksData.map(book => (
+                <Link to={`/books/${book.id}`} key={book.id}>
+                  <BookItemHome id={book.id} bookDetails={book} />
+                </Link>
+              ))}
+            </Slider>
+          )}
         </div>
       </main>
       <div style={{bottom: 0, left: 0, right: 0}}>

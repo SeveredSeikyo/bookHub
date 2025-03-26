@@ -13,10 +13,12 @@ const BookShelves = props => {
   const [bookshelfName, setBookShelfName] = useState('ALL')
   const [searchText, setSearchText] = useState('')
   const [bookShelfData, setBookShelfData] = useState([])
+  const [isError, setIsError] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
   // Function to fetch books
   const fetchBooks = async () => {
+    setIsError(false)
     setIsLoading(true)
     const url = `https://apis.ccbp.in/book-hub/books?shelf=${bookshelfName}&search=${searchText}`
     const jwtToken = Cookies.get('jwt_token')
@@ -46,9 +48,14 @@ const BookShelves = props => {
       }
     } catch (error) {
       console.error('Error fetching data:', error)
+      setIsError(true)
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const onClickTryAgain = () => {
+    fetchBooks()
   }
 
   // Fetch books when `bookshelfName` or `searchText` changes
@@ -59,8 +66,8 @@ const BookShelves = props => {
   return (
     <div className="bookshelf-container">
       <Header />
+      {/* Desktop */}
       <div className="bookshelf-div">
-        {/* Bookshelves Categories */}
         <div className="bookshelf-category-div">
           <h1>Bookshelves</h1>
           {bookshelvesList.map(category => (
@@ -74,7 +81,6 @@ const BookShelves = props => {
           ))}
         </div>
 
-        {/* Search Bar */}
         <div className="bookshelf-result-div">
           <div className="bookshelf-search-div">
             <h1>All Books</h1>
@@ -91,13 +97,24 @@ const BookShelves = props => {
             </div>
           </div>
 
-          {/* Books List or Loader */}
           {isLoading ? (
             <div
               className="loader-container book-shelf-loader"
               data-testid="loader"
             >
               <Loader type="TailSpin" color="#0284C7" height={50} width={50} />
+            </div>
+          ) : null}
+          {isError ? (
+            <div className="error-view">
+              <img
+                src="https://i.postimg.cc/WpnGGXdy/Group-7522.png"
+                alt="failure view"
+              />
+              <p>Something went wrong, Please try again.</p>
+              <button type="button" onClick={onClickTryAgain}>
+                Please Try Again
+              </button>
             </div>
           ) : (
             <div className="book-shelves-result-div">
@@ -120,6 +137,79 @@ const BookShelves = props => {
           )}
           {bookShelfData.length > 0 ? <Footer /> : null}
         </div>
+      </div>
+
+      {/* Mobile */}
+      <div className="bookshelf-mobile-view-div">
+        <div className="bookshelf-mobile-search">
+          <div className="bookshelf-search-input">
+            <input
+              type="search"
+              placeholder="Search"
+              value={searchText}
+              onChange={e => setSearchText(e.target.value)}
+            />
+            <button type="button" onClick={fetchBooks}>
+              <BsSearch />
+            </button>
+          </div>
+        </div>
+        <div className="bookshelf-mobile-category-div">
+          <h1>Bookshelves</h1>
+          <div className="bookshelf-mobile-category-list-div">
+            {bookshelvesList.map(category => (
+              <button
+                type="button"
+                key={category.id}
+                className={
+                  bookshelfName === category.value ? 'selected-mobile' : ''
+                }
+                onClick={() => setBookShelfName(category.value)}
+              >
+                {category.label}
+              </button>
+            ))}
+          </div>
+        </div>
+        {isLoading ? (
+          <div
+            className="loader-container book-shelf-loader"
+            data-testid="loader"
+          >
+            <Loader type="TailSpin" color="#0284C7" height={50} width={50} />
+          </div>
+        ) : null}
+        {isError ? (
+          <div className="error-view">
+            <img
+              src="https://i.postimg.cc/WpnGGXdy/Group-7522.png"
+              alt="failure view"
+            />
+            <p>Something went wrong, Please try again.</p>
+            <button type="button" onClick={onClickTryAgain}>
+              Please Try Again
+            </button>
+          </div>
+        ) : (
+          <div className="book-shelves-result-div">
+            {bookShelfData.length > 0 ? (
+              bookShelfData.map(book => (
+                <Link to={`/books/${book.id}`} key={book.id}>
+                  <BookShelfItem key={book.id} bookDetails={book} />
+                </Link>
+              ))
+            ) : (
+              <div className="book-shelves-error-result">
+                <img
+                  src="https://i.postimg.cc/X7WyLRMc/Group.png"
+                  alt="no books"
+                />
+                <p>Your search for {searchText} did not find any matches.</p>
+              </div>
+            )}
+          </div>
+        )}
+        {bookShelfData.length > 0 ? <Footer /> : null}
       </div>
     </div>
   )

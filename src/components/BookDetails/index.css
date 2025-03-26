@@ -16,4 +16,13 @@
 
 .book-details-main {
   padding: 30px 80px;
+  height: 100%;
+}
+
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
